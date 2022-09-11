@@ -61,7 +61,7 @@ class PostgressDac():
         
         
     @classmethod
-    def execute_parm(cls, query: str, param):
+    def execute_param(cls, query: str, param):
         try:
             with pg2.connect(
                 database = env.POSTGRESSDB_DATABASE,
@@ -82,7 +82,7 @@ class PostgressDac():
         
     
     @classmethod
-    def executemany(cls, query: str, param: list):
+    def executemany_param(cls, query: str, param: list):
         try:
             with pg2.connect(
                 database = env.POSTGRESSDB_DATABASE,

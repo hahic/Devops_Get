@@ -11,7 +11,7 @@ def select_pasture_area_master():
             FROM pasture_area_master pam 
             WHERE useflag = 'Y'
         """
-        return PostgressDac.execute_v2(query)['data']
+        return { 'column': ['idx', 'area'], 'data': PostgressDac.execute(query)['data'] }
         
     except Exception as e:
         logger.error(e)
@@ -29,7 +29,7 @@ def insert_pasture_master(data: pd.DataFrame):
         param = data.copy()
         param = list(param.itertuples(index=False, name=None))
         
-        return PostgressDac.executemany(query, param)['count']
+        return PostgressDac.executemany_param(query, param)['count']
     
     except Exception as e:
         logger.error(e)

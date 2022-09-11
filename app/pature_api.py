@@ -12,7 +12,7 @@ API_API_KEY = env.API_API_KEY
 
 def get_data(start_index: int, end_index: int, area: str):
     try:
-        url = API_URL.replace('&API_API_KEY&', API_API_KEY).replace('&START_INDEX&', start_index).replace('&START_INDEX&', end_index)
+        url = API_URL.replace('&API_API_KEY&', API_API_KEY).replace('&START_INDEX&', str(start_index)).replace('&END_INDEX&', str(end_index))
         payload = { 'AREA': area }
         
         req = requests.get(url=url, params=payload)
@@ -26,14 +26,16 @@ def get_data(start_index: int, end_index: int, area: str):
 def run():
     try:
         process_count = 0
-        area_list = postgress.select_pasture_area_master()
+        data = postgress.select_pasture_area_master()
         
-        for row in area_list:
-            area = row['area']
+        print(data['data'])
+        
+        for row in data['data']:
+            area = row[data['column'].index('area')]
             
             loop = True
             start_index = 1
-            index_Increase = 10
+            index_Increase = 9
             
             while(loop):
                 end_index = start_index + index_Increase
